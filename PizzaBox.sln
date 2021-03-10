@@ -5,6 +5,8 @@ VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaBox.Client", "PizzaBox.Client\PizzaBox.Client.csproj", "{94E36816-1576-469F-85E6-E37670B57F43}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaBox.Domain", "PizzaBox.Domain\PizzaBox.Domain.csproj", "{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{94E36816-1576-469F-85E6-E37670B57F43}.Release|x64.Build.0 = Release|Any CPU
 		{94E36816-1576-469F-85E6-E37670B57F43}.Release|x86.ActiveCfg = Release|Any CPU
 		{94E36816-1576-469F-85E6-E37670B57F43}.Release|x86.Build.0 = Release|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Debug|x64.Build.0 = Debug|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Debug|x86.Build.0 = Debug|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Release|x64.ActiveCfg = Release|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Release|x64.Build.0 = Release|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Release|x86.ActiveCfg = Release|Any CPU
+		{D25318CF-85B1-4A7F-B80F-7B825BF19DFB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

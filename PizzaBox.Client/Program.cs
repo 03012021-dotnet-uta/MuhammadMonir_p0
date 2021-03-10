@@ -1,4 +1,5 @@
 ﻿using System;
+using PizzaBox.Domain.Models;
 
 namespace PizzaBox.Client
 {
@@ -6,7 +7,18 @@ namespace PizzaBox.Client
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Customer c = WelcomeMessage();
+            System.Console.WriteLine("You Are ... "+c.Name);
+            //Store = SelectStore();
+           // Pizza = SelectPizza();
+           // Order = new Order(Store, Pizza);
+        }
+
+        public static Customer WelcomeMessage()
+        {
+            System.Console.WriteLine("Good Day... Welcome to Pizza ordering App");
+            Customer c = new Customer();
+            return c;
         }
     }
 }
