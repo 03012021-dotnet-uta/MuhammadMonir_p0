@@ -11,7 +11,7 @@ namespace SweetNSalty
             int countSalty = 0;
             int countSweetNSalty = 0;
             int start = 1;
-            int end = 100;
+            int end = 1000;
             for (i = start; i <= end; i++)
             {
                 // number divisible by 3 and 5 will
