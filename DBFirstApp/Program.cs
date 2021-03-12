@@ -1,6 +1,7 @@
 ﻿using System;
 using DBFirstApp.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DBFirstApp
 {
@@ -11,7 +12,7 @@ namespace DBFirstApp
             Console.WriteLine("Hello World!");
             using (var dbcontext = new masterContext())
             {
-                IEnumerable<Customer> customers = dbcontext.Customers;
+                List<Customer> customers = dbcontext.Customers.ToList();
 
                 foreach(var c in customers)
                     System.Console.WriteLine(c.FirstName);
