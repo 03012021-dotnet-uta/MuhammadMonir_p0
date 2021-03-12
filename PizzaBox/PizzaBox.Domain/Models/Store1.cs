@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace PizzaBox.Domain.Models
 {
-    class Store : AStore
+    public class Store1 : AStore
     {
+        public Store1()
+        {
+            StoreID = 1;
+            Name = "Store#1";
+        }
     }
 }
