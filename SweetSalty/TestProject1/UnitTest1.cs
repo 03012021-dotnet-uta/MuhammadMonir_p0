@@ -1,8 +1,8 @@
+using SweetSalty;
 using System;
 using Xunit;
 
-
-namespace SweetNSalty.Test
+namespace TestProject1
 {
     public class UnitTest1
     {
