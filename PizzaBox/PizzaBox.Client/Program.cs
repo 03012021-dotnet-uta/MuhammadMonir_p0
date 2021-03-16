@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using PizzaBox.DAL;
 using PizzaBox.Domain.Abstracts;
 using PizzaBox.Domain.Models;
 using PizzaBox.Domain.Singletons;
@@ -9,37 +12,37 @@ namespace PizzaBox.Client
 {
     class Program
     {
-        public static object StoreSingleton { get; private set; }
+
+        private static int customerId;
+        private static int storeId;
+
 
         static void Main(string[] args)
         {
-            Customer c = WelcomeMessage();
-            System.Console.WriteLine("You Are ... "+c.Name);
-            AStore selectedStore = SelectStore();
-            Console.WriteLine("You Selected {0} store", selectedStore.Name);
-            // Pizza = SelectPizza();
-            // Order = new Order(Store, Pizza);
-            ReadWriteXML.ReadStoreXML();
+            char choice;
+            do
+            {
+                UserStartPoint usp = new();
+                customerId = usp.WelcomeMessage();
+                Console.WriteLine("UserID = {0}", customerId);
+                StoreSelector ss = new();
+                storeId = ss.SelectStore();
+                Console.WriteLine("You Selected {0} store", storeId);
+                OrderTaker orderTaker = new();
+                orderTaker.BuildOrder(customerId, storeId);
+                Console.WriteLine("\nThank you very much you order has been received. Store will contact you once your order is ready...");
+                Console.WriteLine("\n\nPress <Enter> for new Order or <E> to exit");
+                choice = Console.ReadKey().KeyChar;
+               
+            } while (choice != 'e' && choice != 'E');
+
+            Console.WriteLine("\n\n\nBye---Thanks for using My App");
+
+
         }
 
-        private static AStore SelectStore()
-        {
 
 
-            StoreSingleton ss = new StoreSingleton();
-            List<AStore> storeslist = ss.stores;
-            foreach(var s in storeslist)
-                Console.WriteLine("Please enter {0} if you want to select {1}",s.StoreID,s.Name);
-           
-            int i = Convert.ToInt32(Console.ReadLine());
-            return storeslist[i-1];
-        }
 
-        public static Customer WelcomeMessage()
-        {
-            System.Console.WriteLine("Good Day... Welcome to Pizza ordering App");
-            Customer c = new Customer();
-            return c;
-        }
     }
 }

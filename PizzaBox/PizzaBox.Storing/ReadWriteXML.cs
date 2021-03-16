@@ -12,7 +12,7 @@ namespace PizzaBox.Storing
     {
         private static string _path = "Stores.xml";
         
-        public static void ReadStoreXML()
+        public static void WriteStoreXML()
         {
             StreamWriter writer = new StreamWriter(_path);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<AStore>));
@@ -20,6 +20,14 @@ namespace PizzaBox.Storing
             List<AStore> stores = ss.stores;
             xmlSerializer.Serialize(writer, stores);
 
+        }
+
+        public static List<AStore> ReadStoreXML()
+        {
+            StreamReader reader = new StreamReader(_path);
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<AStore>));
+            List<AStore> stores = (List<AStore>)xmlSerializer.Deserialize(reader);
+            return stores;
         }
 
     }
