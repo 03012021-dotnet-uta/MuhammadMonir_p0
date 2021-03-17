@@ -1,19 +1,43 @@
-using PizzaBox.Client;
+using PizzaBox.Domain;
 using PizzaBox;
 using Xunit;
 using Microsoft.IdentityModel.Tokens;
+using PizzaBox.Domain.Models;
 
 namespace PizzaBox.Testing
 {
-    public class UnitTest1
+    public class TestCustomer
     {
         [Fact]
         public void Test1()
         {
-            //    var res = new PizzaBox.DAL.Utility(); //PizzaBox.   //.Client // Program.multtest(4,3);
-            //    var expected = 12;
+            var cust = new Customer()
+            { Name = "tahir" };
 
-            //    Assert.Equal(res, expected);
+            var expected = "tahir";
+
+            var result = cust.Name;
+
+            Assert.Equal(result, expected);
+
+        }
+
+        [Theory]
+        [InlineData("user 1")]
+        public void Test2(string expected)
+        {
+            var sut = new Customer()
+            {
+                Name = "user 1"
+            };
+
+
+
+            var actual = sut.Name;
+
+
+            Assert.Equal(expected, actual);
+
         }
     }
 }
