@@ -6,9 +6,10 @@ let countSweetNSalty = 0;
 
 function myMainfunction() {
     let i = 0;
-
-    let start = 1;
-    let end = 1000;
+    let start = prompt("Enter a starting number");
+    //let start = 1;
+    let end = prompt("Enter the ending number");
+    //let end = 1000;
     let lineString = "";
     for (i = start; i <= end; i++) {
         // number divisible by 3 and 5 will
