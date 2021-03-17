@@ -9,7 +9,7 @@ namespace PizzaBox.Domain.Models
 {
     public class PremadePizza : APizza
     {
-        public ICollection<PremadePizzaTopping> PremadePizzaToppings { get; set; } = new List<PremadePizzaTopping>();
+       public ICollection<PremadePizzaTopping> PremadePizzaToppings { get; set; } = new List<PremadePizzaTopping>();
 
     }
 }

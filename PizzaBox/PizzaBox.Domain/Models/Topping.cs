@@ -13,8 +13,7 @@ namespace PizzaBox.Domain.Models
         public string Description { get; set; }
         public float BasePrice { get; set; }
 
-        public ICollection<PremadePizzaTopping>  PremadePizzaToppings { get; set; }
+        public ICollection<PremadePizza>  PremadePizzaToppings { get; set; }
         public ICollection<CustomizedPizza> CustomizedPizzas { get; set; }
-
     }
 }

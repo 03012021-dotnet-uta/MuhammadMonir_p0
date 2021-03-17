@@ -18,7 +18,7 @@ namespace PizzaBox.DAL
         List<PremadePizzaTopping> GetPremadePizzaTopping();
         List<CustomizedPizzaTopping> GetCustomizedPizzaTopping();
 
-        void SaveCustomizedPizza(APizza cp);
+        int SaveCustomizedPizza(APizza cp);
         
 
     }

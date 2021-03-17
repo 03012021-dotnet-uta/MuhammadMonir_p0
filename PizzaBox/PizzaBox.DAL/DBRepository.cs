@@ -38,8 +38,8 @@ namespace PizzaBox.DAL
 
         public List<CustomizedPizzaTopping> GetCustomizedPizzaTopping()
         {
-           return _myContext.CustomizedPizzaTopping.ToList<CustomizedPizzaTopping>();
-           
+            return _myContext.CustomizedPizzaTopping.ToList<CustomizedPizzaTopping>();
+
         }
 
         public List<OrderDetail> GetOrderDetails()
@@ -59,8 +59,8 @@ namespace PizzaBox.DAL
 
         public List<PremadePizzaTopping> GetPremadePizzaTopping()
         {
-             return _myContext.PremadePizzaTopping.ToList<PremadePizzaTopping>();
-           
+            return _myContext.PremadePizzaTopping.ToList<PremadePizzaTopping>();
+
         }
 
         public List<Size> GetSizes()
@@ -84,10 +84,11 @@ namespace PizzaBox.DAL
             _myContext.SaveChanges();
         }
 
-        public void SaveCustomizedPizza(APizza cp)
+        public int SaveCustomizedPizza(APizza cp)
         {
             _myContext.CustomizedPizzas.Add((CustomizedPizza)cp);
             _myContext.SaveChanges();
+            return cp.ID;
         }
 
         public int SaveOrder(Order o)

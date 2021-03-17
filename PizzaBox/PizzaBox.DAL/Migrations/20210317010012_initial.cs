@@ -85,6 +85,26 @@ namespace PizzaBox.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CustomizedPizzas",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CrustID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomizedPizzas", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_CustomizedPizzas_Crusts_CrustID",
+                        column: x => x.CrustID,
+                        principalTable: "Crusts",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PremadePizzas",
                 columns: table => new
                 {
@@ -128,75 +148,48 @@ namespace PizzaBox.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CustomizedPizzas",
+                name: "CustomizedPizzaTopping",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ToppingID = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CrustID = table.Column<int>(type: "int", nullable: false)
+                    CustomizedPizzasID = table.Column<int>(type: "int", nullable: false),
+                    ToppingsID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CustomizedPizzas", x => x.ID);
+                    table.PrimaryKey("PK_CustomizedPizzaTopping", x => new { x.CustomizedPizzasID, x.ToppingsID });
                     table.ForeignKey(
-                        name: "FK_CustomizedPizzas_Crusts_CrustID",
-                        column: x => x.CrustID,
-                        principalTable: "Crusts",
+                        name: "FK_CustomizedPizzaTopping_CustomizedPizzas_CustomizedPizzasID",
+                        column: x => x.CustomizedPizzasID,
+                        principalTable: "CustomizedPizzas",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CustomizedPizzas_Toppings_ToppingID",
-                        column: x => x.ToppingID,
+                        name: "FK_CustomizedPizzaTopping_Toppings_ToppingsID",
+                        column: x => x.ToppingsID,
                         principalTable: "Toppings",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PremadePizzaTopping",
                 columns: table => new
                 {
-                    PremadePizzaID = table.Column<int>(type: "int", nullable: false),
-                    ToppingID = table.Column<int>(type: "int", nullable: false)
+                    PremadePizzaToppingsID = table.Column<int>(type: "int", nullable: false),
+                    ToppingsID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PremadePizzaTopping", x => new { x.PremadePizzaID, x.ToppingID });
+                    table.PrimaryKey("PK_PremadePizzaTopping", x => new { x.PremadePizzaToppingsID, x.ToppingsID });
                     table.ForeignKey(
-                        name: "FK_PremadePizzaTopping_PremadePizzas_PremadePizzaID",
-                        column: x => x.PremadePizzaID,
+                        name: "FK_PremadePizzaTopping_PremadePizzas_PremadePizzaToppingsID",
+                        column: x => x.PremadePizzaToppingsID,
                         principalTable: "PremadePizzas",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PremadePizzaTopping_Toppings_ToppingID",
-                        column: x => x.ToppingID,
-                        principalTable: "Toppings",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CustomizedPizzaTopping",
-                columns: table => new
-                {
-                    CustomizedPizzaID = table.Column<int>(type: "int", nullable: false),
-                    ToppingID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CustomizedPizzaTopping", x => new { x.CustomizedPizzaID, x.ToppingID });
-                    table.ForeignKey(
-                        name: "FK_CustomizedPizzaTopping_CustomizedPizzas_CustomizedPizzaID",
-                        column: x => x.CustomizedPizzaID,
-                        principalTable: "CustomizedPizzas",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CustomizedPizzaTopping_Toppings_ToppingID",
-                        column: x => x.ToppingID,
+                        name: "FK_PremadePizzaTopping_Toppings_ToppingsID",
+                        column: x => x.ToppingsID,
                         principalTable: "Toppings",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -208,14 +201,9 @@ namespace PizzaBox.DAL.Migrations
                 column: "CrustID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomizedPizzas_ToppingID",
-                table: "CustomizedPizzas",
-                column: "ToppingID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CustomizedPizzaTopping_ToppingID",
+                name: "IX_CustomizedPizzaTopping_ToppingsID",
                 table: "CustomizedPizzaTopping",
-                column: "ToppingID");
+                column: "ToppingsID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderID",
@@ -228,9 +216,9 @@ namespace PizzaBox.DAL.Migrations
                 column: "CrustID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PremadePizzaTopping_ToppingID",
+                name: "IX_PremadePizzaTopping_ToppingsID",
                 table: "PremadePizzaTopping",
-                column: "ToppingID");
+                column: "ToppingsID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

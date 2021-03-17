@@ -12,10 +12,8 @@ namespace PizzaBox.Domain.Abstracts
         public int ID { get; set; }
         public string Name { get; set; }
         public int CrustID { get; set; }
-             
-        public Crust Crust { get; set; }
-       
 
-       
+        public Crust Crust { get; set; }
+      
     }
 }

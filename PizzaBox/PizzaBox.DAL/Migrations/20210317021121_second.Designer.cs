@@ -10,8 +10,8 @@ using PizzaBox.DAL;
 namespace PizzaBox.DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20210315192757_initial")]
-    partial class initial
+    [Migration("20210317021121_second")]
+    partial class second
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,21 @@ namespace PizzaBox.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("CustomizedPizzaTopping", b =>
+                {
+                    b.Property<int>("CustomizedPizzasID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToppingsID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CustomizedPizzasID", "ToppingsID");
+
+                    b.HasIndex("ToppingsID");
+
+                    b.ToTable("CustomizedPizzaToppings");
+                });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Crust", b =>
                 {
@@ -76,31 +91,11 @@ namespace PizzaBox.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ToppingID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.HasIndex("CrustID");
 
-                    b.HasIndex("ToppingID");
-
                     b.ToTable("CustomizedPizzas");
-                });
-
-            modelBuilder.Entity("PizzaBox.Domain.Models.CustomizedPizzaTopping", b =>
-                {
-                    b.Property<int>("CustomizedPizzaID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ToppingID")
-                        .HasColumnType("int");
-
-                    b.HasKey("CustomizedPizzaID", "ToppingID");
-
-                    b.HasIndex("ToppingID");
-
-                    b.ToTable("CustomizedPizzaTopping");
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Order", b =>
@@ -179,21 +174,6 @@ namespace PizzaBox.DAL.Migrations
                     b.ToTable("PremadePizzas");
                 });
 
-            modelBuilder.Entity("PizzaBox.Domain.Models.PremadePizzaTopping", b =>
-                {
-                    b.Property<int>("PremadePizzaID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ToppingID")
-                        .HasColumnType("int");
-
-                    b.HasKey("PremadePizzaID", "ToppingID");
-
-                    b.HasIndex("ToppingID");
-
-                    b.ToTable("PremadePizzaTopping");
-                });
-
             modelBuilder.Entity("PizzaBox.Domain.Models.Size", b =>
                 {
                     b.Property<int>("ID")
@@ -236,6 +216,36 @@ namespace PizzaBox.DAL.Migrations
                     b.ToTable("Toppings");
                 });
 
+            modelBuilder.Entity("PremadePizzaTopping", b =>
+                {
+                    b.Property<int>("PremadePizzaToppingsID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToppingsID")
+                        .HasColumnType("int");
+
+                    b.HasKey("PremadePizzaToppingsID", "ToppingsID");
+
+                    b.HasIndex("ToppingsID");
+
+                    b.ToTable("PremadePizzaToppings");
+                });
+
+            modelBuilder.Entity("CustomizedPizzaTopping", b =>
+                {
+                    b.HasOne("PizzaBox.Domain.Models.CustomizedPizza", null)
+                        .WithMany()
+                        .HasForeignKey("CustomizedPizzasID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PizzaBox.Domain.Models.Topping", null)
+                        .WithMany()
+                        .HasForeignKey("ToppingsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PizzaBox.Domain.Models.CustomizedPizza", b =>
                 {
                     b.HasOne("PizzaBox.Domain.Models.Crust", "Crust")
@@ -244,30 +254,7 @@ namespace PizzaBox.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PizzaBox.Domain.Models.Topping", null)
-                        .WithMany("CustomizedPizzas")
-                        .HasForeignKey("ToppingID");
-
                     b.Navigation("Crust");
-                });
-
-            modelBuilder.Entity("PizzaBox.Domain.Models.CustomizedPizzaTopping", b =>
-                {
-                    b.HasOne("PizzaBox.Domain.Models.CustomizedPizza", "PremadePizza")
-                        .WithMany("PremadePizzaToppings")
-                        .HasForeignKey("CustomizedPizzaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PizzaBox.Domain.Models.Topping", "Topping")
-                        .WithMany()
-                        .HasForeignKey("ToppingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PremadePizza");
-
-                    b.Navigation("Topping");
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.OrderDetail", b =>
@@ -292,45 +279,24 @@ namespace PizzaBox.DAL.Migrations
                     b.Navigation("Crust");
                 });
 
-            modelBuilder.Entity("PizzaBox.Domain.Models.PremadePizzaTopping", b =>
+            modelBuilder.Entity("PremadePizzaTopping", b =>
                 {
-                    b.HasOne("PizzaBox.Domain.Models.PremadePizza", "PremadePizza")
-                        .WithMany("PremadePizzaToppings")
-                        .HasForeignKey("PremadePizzaID")
+                    b.HasOne("PizzaBox.Domain.Models.PremadePizza", null)
+                        .WithMany()
+                        .HasForeignKey("PremadePizzaToppingsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PizzaBox.Domain.Models.Topping", "Topping")
-                        .WithMany("PremadePizzaToppings")
-                        .HasForeignKey("ToppingID")
+                    b.HasOne("PizzaBox.Domain.Models.Topping", null)
+                        .WithMany()
+                        .HasForeignKey("ToppingsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("PremadePizza");
-
-                    b.Navigation("Topping");
-                });
-
-            modelBuilder.Entity("PizzaBox.Domain.Models.CustomizedPizza", b =>
-                {
-                    b.Navigation("PremadePizzaToppings");
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Order", b =>
                 {
                     b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("PizzaBox.Domain.Models.PremadePizza", b =>
-                {
-                    b.Navigation("PremadePizzaToppings");
-                });
-
-            modelBuilder.Entity("PizzaBox.Domain.Models.Topping", b =>
-                {
-                    b.Navigation("CustomizedPizzas");
-
-                    b.Navigation("PremadePizzaToppings");
                 });
 #pragma warning restore 612, 618
         }

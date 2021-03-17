@@ -18,17 +18,30 @@ namespace PizzaBox.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
-            optionBuilder.UseSqlServer(@"Data Source = (localdb)\MSSqlLocalDB;Initial Catalog=MyPizzaStoreDB;");
+            optionBuilder.EnableSensitiveDataLogging();
+            optionBuilder.UseSqlServer(@"Data Source = (localdb)\MSSqlLocalDB;Initial Catalog=PizzaStoreDataBase;");
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<PremadePizzaTopping>()
-                .HasKey(c =>  new { c.PremadePizzaID, c.ToppingID });
+                .HasKey(t => new { t.PremadePizzaID, t.ToppingID });
 
             modelBuilder.Entity<CustomizedPizzaTopping>()
-                .HasKey(c => new { c.CustomizedPizzaID, c.ToppingID });
+              .HasKey(t => new { t.CustomizedPizzaID, t.ToppingID });
+
+            //modelBuilder.Entity<PremadePizzaTopping>()
+            //    .HasOne(p => p.PremadePizza)
+            //    .WithMany(p => p.PremadePizzaToppings)
+            //    .UsingEntity(j => j.ToTable("PremadePizzaToppings"));
+
+            //modelBuilder.Entity<CustomizedPizza>()
+            //   .HasOne(p => p.)
+            //   .WithMany(p => p.CustomizedPizzas)
+            //   .UsingEntity(j => j.ToTable("CustomizedPizzaToppings"));
+
 
 
         }

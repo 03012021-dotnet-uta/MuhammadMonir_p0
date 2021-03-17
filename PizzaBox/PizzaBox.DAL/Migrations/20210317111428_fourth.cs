@@ -2,7 +2,7 @@
 
 namespace PizzaBox.DAL.Migrations
 {
-    public partial class initialcorrection : Migration
+    public partial class fourth : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

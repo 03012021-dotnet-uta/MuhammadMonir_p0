@@ -12,7 +12,7 @@ namespace PizzaBox.Client
     class OrderTaker
     {
         private IRepository mc;
-      
+
         private List<Crust> crusts;
         private int totalPremadePiza;
         private int totalCustomizedPizza;
@@ -34,8 +34,7 @@ namespace PizzaBox.Client
 
         public OrderTaker()
         {
-
-            IRepository mc = new DBRepository();
+            mc = new DBRepository();
 
             totalPremadePiza = mc.GetPremadePizzas().Count;
             totalCrusts = mc.GetCrusts().Count;
@@ -50,13 +49,14 @@ namespace PizzaBox.Client
             crusts = mc.GetCrusts();
             toppings = mc.GetToppings();
             newOrderDetails = new List<OrderDetail>();
+            
 
         }
 
         public void BuildOrder(int customerID, int storeID)
         {
 
-           
+
             int checkout = 0;
             float[] mf = new float[4];
             mf[0] = 1.0f;
@@ -75,11 +75,12 @@ namespace PizzaBox.Client
                     Console.WriteLine("Having or made by  {0}", crust.Name);
                     Console.Write("Toppings including ");
                     float price = crust.BasePrice;
+                    
                     List<PremadePizzaTopping> pt = premadePizzaToppings.FindAll(x => x.PremadePizzaID == p.ID);
                     Topping topping1;
                     foreach (var p1 in pt)
                     {
-                        topping1 = toppings.FirstOrDefault(g => g.ID == p1.ToppingID);
+                       topping1 = toppings.FirstOrDefault(g => g.ID == p1.ToppingID);
                         Console.Write(topping1.Name + " ");
                         price += topping1.BasePrice;
                     }
@@ -87,7 +88,8 @@ namespace PizzaBox.Client
                     thisPizzaPrice = price;
 
                     Console.WriteLine("\nPrices:  \tSmall = ${0}\n\t\tMedium = ${1}" +
-                        "\n\t\tLarge = ${2}\n\t\tX_Large = ${3} \n", price, (price * mf[1]).ToString("n2"), (price * mf[2]).ToString("n2"), (price * mf[3]).ToString("n2"));
+                        "\n\t\tLarge = ${2}\n\t\tX_Large = ${3} \n", price, (price * mf[1]).ToString("n2"),
+                        (price * mf[2]).ToString("n2"), (price * mf[3]).ToString("n2"));
                     Console.WriteLine("Pizza Code <{0}>", p.ID);
                     pizzaCodes.Add(p.ID);
                 }
@@ -106,7 +108,8 @@ namespace PizzaBox.Client
                         selectedPizza = CreatPizza();
                         float price = thisPizzaPrice; // int price2 = utility.CalculatePrice(selectedPizza, 1);
                         Console.WriteLine("\nPrices:  \tSmall = ${0}\n\t\tMedium = ${1}" +
-                       "\n\t\tLarge = ${2}\n\t\tX_Large = ${3} \n", price, (price * mf[1]).ToString("n2"), (price * mf[2]).ToString("n2"), (price * mf[3]).ToString("n2"));
+                       "\n\t\tLarge = ${2}\n\t\tX_Large = ${3} \n", price, (price * mf[1]).ToString("n2"), (price * mf[2]).ToString("n2"),
+                       (price * mf[3]).ToString("n2"));
 
                     }
 
@@ -118,7 +121,7 @@ namespace PizzaBox.Client
 
                     else
                         Console.WriteLine("Invalid choice, pleae enter again");
-                   
+
                 } while (!pizzaCodes.Contains(choice));
 
                 int size = 1;
@@ -136,10 +139,10 @@ namespace PizzaBox.Client
                 Console.Write("-----------\nEnter Quantity: ");
                 int qty = Convert.ToInt32(Console.ReadLine());
 
-                float fprice =  thisPizzaPrice*mf[size-1];
+                float fprice = thisPizzaPrice * mf[size - 1];
 
                 //order item detail
-               
+
                 Console.WriteLine("\nYour item: {0}\t{1}(size)\tQty:{2}\t{3}/per item\tSubTotal = ${4}",
                     selectedPizza.Name, sizes.Find(sz => sz.ID == size).Name, qty, fprice.ToString("n2"), (qty * fprice).ToString("n2"));
                 selectedPizza.Name += " " + sizes.Find(sz => sz.ID == size).Name;
@@ -163,39 +166,30 @@ namespace PizzaBox.Client
             {
                 total += ord.Price * ord.Quantity;
                 Console.WriteLine("{0} X {1}\t{2} per pizza\t\tSubtotal = {3}",
-                ord.Quantity, ord.ProductName, ord.Price.ToString("n2"), (ord.Quantity* ord.Price).ToString("n2"));
+                ord.Quantity, ord.ProductName, ord.Price.ToString("n2"), (ord.Quantity * ord.Price).ToString("n2"));
             }
-            Console.WriteLine("\t----------\nTotal = {0}\n\tTaxes = {1}\n\tGrand Total = {2}", total.ToString("n2"), (0.1 * total).ToString("n2"), (1.1 * total).ToString("n2"));
-            
+            Console.WriteLine("\t----------\n\tTotal = {0}\n\tTaxes = {1}\n\tGrand Total = {2}", total.ToString("n2"), (0.1 * total).ToString("n2"), (1.1 * total).ToString("n2"));
+
             newOrder.CustomerID = customerID;
             newOrder.StoreID = storeID;
             newOrder.OrderDate = DateTime.Now.Date;
             newOrder.StoreAmount = total;
             newOrder.TaxAmount = (float)(total * 1.1);
-            DBRepository db = new();
-            int newOrderID = db.SaveOrder(newOrder);
-            foreach (var ord in newOrderDetails)
-            {
-                ord.OrderID = newOrderID;
-                db.SaveOrderDetail(ord);
-            }
-            //orders.Add(newOrder);
-
+            
+            int newOrderID = mc.SaveOrder(newOrder);
+            
+            Console.WriteLine("Your order is saved with ID# {0}", newOrderID);
         }
-
-
 
 
         private void AddToOrder(APizza aPizza, int size, int qty, float price)
         {
-            //Console.WriteLine("aPizza Prop ID ={0}\tName = {1}", aPizza.ID, aPizza.Name);
             OrderDetail cd = new();
             cd.ProductID = aPizza.ID;
             cd.ProductName = aPizza.Name;
             cd.Quantity = qty;
             cd.Price = price;
             newOrderDetails.Add(cd);
-            //orderDetails.Add(od);
 
         }
 
@@ -233,8 +227,8 @@ namespace PizzaBox.Client
 
                 } while (toppingChoice < 1 || toppingChoice > totalToppings);
 
-                customizedPizza.CustomizedPizzaToppings.Add(new CustomizedPizzaTopping() { ToppingID = toppingChoice });
-                toppingArray[i-1] = toppingChoice;
+                customizedPizza.CustomizedPizzaToppings.Add(new CustomizedPizzaTopping { ToppingID = toppingChoice });
+                toppingArray[i - 1] = toppingChoice;
             }
             float[] mf = new float[4];
             mf[0] = 1.0f;
@@ -242,16 +236,16 @@ namespace PizzaBox.Client
             mf[2] = sizes[2].PriceMultiplicationFactor;
             mf[3] = sizes[3].PriceMultiplicationFactor;
 
-
-
-
             float price = CalculatePrice(customizedPizza.CrustID, toppingArray);
             Console.WriteLine("\nPrices:  \tSmall = ${0}\n\t\tMedium = ${1}" +
-            "\n\t\tLarge = ${2}\n\t\tX_Large = ${3} \n", price, (price * mf[1]).ToString("n2"), (price * mf[2]).ToString("n2"), (price * mf[3]).ToString("n2"));
+            "\n\t\tLarge = ${2}\n\t\tX_Large = ${3} \n", price, (price * mf[1]).ToString("n2"), (price * mf[2]).ToString("n2"),
+            (price * mf[3]).ToString("n2"));
             Console.WriteLine("Enter a name to save this for future reference");
             customizedPizza.Name = Console.ReadLine();
             thisPizzaPrice = price;
             //utility.PrintPizza(customizedPizza);
+            int saveID = mc.SaveCustomizedPizza(customizedPizza);
+            Console.WriteLine("Pizza saved with ID {0}", saveID);
             return customizedPizza;
         }
 

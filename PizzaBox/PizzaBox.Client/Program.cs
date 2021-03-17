@@ -37,8 +37,11 @@ namespace PizzaBox.Client
             } while (choice != 'e' && choice != 'E');
 
             Console.WriteLine("\n\n\nBye---Thanks for using My App");
+        }
 
-
+        public static int multtest(int a, int b)
+        {
+            return a * b;
         }
 
 
