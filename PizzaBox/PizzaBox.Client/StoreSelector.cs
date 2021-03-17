@@ -20,7 +20,7 @@ namespace PizzaBox.Client
             List<AStore> storeslist = ss.stores;
             //List<AStore> storeslist = ReadWriteXML.ReadStoreXML();
             foreach (var s in storeslist)
-                Console.WriteLine("Please enter {0} if you want to select {1}", s.StoreID, s.Name);
+                Console.WriteLine("Please enter {0} if you want to select {1}", s.ID, s.Name);
 
             int i = Convert.ToInt32(Console.ReadLine());
             return i;

@@ -13,6 +13,7 @@ namespace PizzaBox.DAL
         public DbSet<Crust> Crusts { get; set; }
         public DbSet<Topping> Toppings { get; set; }
         public DbSet<Size> Sizes { get; set; }
+        public DbSet<Store> Stores { get; set; }
         public DbSet<PremadePizzaTopping> PremadePizzaTopping { get; set; }
         public DbSet<CustomizedPizzaTopping> CustomizedPizzaTopping { get; set; }
 

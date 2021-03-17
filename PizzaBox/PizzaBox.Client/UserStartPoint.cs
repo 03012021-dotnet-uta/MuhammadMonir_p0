@@ -30,7 +30,7 @@ namespace PizzaBox.Client
             {
 
                 Console.WriteLine("Sorry you are not registered... Please enter your name to register");
-                customer.Name = Console.ReadLine();
+                customer.FName = Console.ReadLine();
                 //customer.ID = totalcustomer + 1;
                 customer.PhoneNumber = phoneNumber;
                 customerRepository.SaveCustomer(customer);

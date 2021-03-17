@@ -11,7 +11,7 @@ namespace PizzaBox.Domain.Models
     {
         public Store1()
         {
-            StoreID = 1;
+            ID = 1;
             Name = "Store#1";
         }
     }

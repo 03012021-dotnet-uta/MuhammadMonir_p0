@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaBox.DAL;
 
 namespace PizzaBox.DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20210317180000_fifth")]
+    partial class fifth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,9 +60,6 @@ namespace PizzaBox.DAL.Migrations
 
                     b.Property<string>("FName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("bit");
 
                     b.Property<string>("LName")
                         .HasColumnType("nvarchar(max)");
@@ -148,8 +147,6 @@ namespace PizzaBox.DAL.Migrations
 
                     b.HasIndex("CustomerID");
 
-                    b.HasIndex("StoreID");
-
                     b.ToTable("Orders");
                 });
 
@@ -159,9 +156,6 @@ namespace PizzaBox.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CustomizedPizzaID")
-                        .HasColumnType("int");
 
                     b.Property<int>("OrderID")
                         .HasColumnType("int");
@@ -175,9 +169,6 @@ namespace PizzaBox.DAL.Migrations
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProductName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -186,11 +177,7 @@ namespace PizzaBox.DAL.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CustomizedPizzaID");
-
                     b.HasIndex("OrderID");
-
-                    b.HasIndex("PremadePizzaID");
 
                     b.HasIndex("SizeID");
 
@@ -354,34 +341,14 @@ namespace PizzaBox.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PizzaBox.Domain.Models.Store", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Customer");
-
-                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.OrderDetail", b =>
                 {
-                    b.HasOne("PizzaBox.Domain.Models.CustomizedPizza", "CustomizedPizza")
-                        .WithMany()
-                        .HasForeignKey("CustomizedPizzaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PizzaBox.Domain.Models.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PizzaBox.Domain.Models.PremadePizza", "PremadePizza")
-                        .WithMany()
-                        .HasForeignKey("PremadePizzaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -391,11 +358,7 @@ namespace PizzaBox.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CustomizedPizza");
-
                     b.Navigation("Order");
-
-                    b.Navigation("PremadePizza");
 
                     b.Navigation("Size");
                 });

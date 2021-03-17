@@ -7,7 +7,7 @@ namespace PizzaBox.Domain.Models
         public string Title { get; set; }
         public Store2()
         {
-            StoreID = 2;
+            ID = 2;
             Name = "Store#2";
             Title = "A Franchise Sereze";
         }

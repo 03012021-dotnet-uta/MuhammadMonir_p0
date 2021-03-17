@@ -12,11 +12,11 @@ namespace PizzaBox.Testing
         public void Test1()
         {
             var cust = new Customer()
-            { Name = "tahir" };
+            { FName = "tahir" };
 
             var expected = "tahir";
 
-            var result = cust.Name;
+            var result = cust.FName;
 
             Assert.Equal(result, expected);
 
@@ -28,12 +28,12 @@ namespace PizzaBox.Testing
         {
             var sut = new Customer()
             {
-                Name = "user 1"
+                FName = "user 1"
             };
 
 
 
-            var actual = sut.Name;
+            var actual = sut.FName;
 
 
             Assert.Equal(expected, actual);
