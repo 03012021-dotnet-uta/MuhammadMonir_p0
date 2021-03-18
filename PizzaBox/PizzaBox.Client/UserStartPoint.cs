@@ -19,12 +19,12 @@ namespace PizzaBox.Client
         {
             List<Customer> customers = customerRepository.GetCustomers();
             Console.WriteLine("Good Day... Welcome to Pizza ordering App");
-            Console.WriteLine("Enter your Phone Number(10-digits):");
-            string phoneNumber = Console.ReadLine();
+            Console.WriteLine("Enter your email:");
+            string Email = Console.ReadLine();
             Customer customer = new Customer();
             try
             {
-               customer = customers.First(cst => cst.PhoneNumber.Contains(phoneNumber));
+               customer = customers.First(cst => cst.Email.Contains(Email));
             }
             catch
             {
@@ -32,7 +32,7 @@ namespace PizzaBox.Client
                 Console.WriteLine("Sorry you are not registered... Please enter your name to register");
                 customer.FName = Console.ReadLine();
                 //customer.ID = totalcustomer + 1;
-                customer.PhoneNumber = phoneNumber;
+                customer.Email = Email;
                 customerRepository.SaveCustomer(customer);
                 return customer.ID;
             }

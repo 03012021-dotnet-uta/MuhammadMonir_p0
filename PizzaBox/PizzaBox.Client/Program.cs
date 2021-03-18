@@ -22,14 +22,14 @@ namespace PizzaBox.Client
             char choice;
             do
             {
-                UserStartPoint usp = new();
-                customerId = usp.WelcomeMessage();
-                Console.WriteLine("UserID = {0}", customerId);
-                StoreSelector ss = new();
-                storeId = ss.SelectStore();
-                Console.WriteLine("You Selected {0} store", storeId);
+                //UserStartPoint usp = new();
+                //customerId = usp.WelcomeMessage();
+                //Console.WriteLine("UserID = {0}", customerId);
+                //StoreSelector ss = new();
+                //storeId = ss.SelectStore();
+                //Console.WriteLine("You Selected {0} store", storeId);
                 OrderTaker orderTaker = new();
-                orderTaker.BuildOrder(customerId, storeId);
+                orderTaker.CreatPizza();//orderTaker.BuildOrder(1, 1); // (customerId, storeId);
                 Console.WriteLine("\nThank you very much you order has been received. Store will contact you once your order is ready...");
                 Console.WriteLine("\n\nPress <Enter> for new Order or <E> to exit");
                 choice = Console.ReadKey().KeyChar;

@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Exercise HTML</title>
+    <link href="../StyleSheet1.css" />
+</head>
+<body>
+    <h1>
+        About
+    </h1>
+    <p>
+        Some Text goes here
+    </p>
+    <h2>
+        Our Locations
+    </h2>
+    <ul>
+        <li><h2>USA</h2></li>
+        <ul>
+            <li><a href="https://google.com" target="blank">New York</a></li>
+            <li><a href="">Columbus</a></li>
+            <li><a href="">Austin</a></li>
+            <li><a href="">Philly</a></li>
+        </ul>
+        <li><h2>World</h2></li>
+        <ul>
+            <li><a href="">Ottawa</a></li>
+            <li><a href="">Sydney</a></li>
+        </ul>
+
+    </ul>
+    <h1>Upcoming Classes</h1>
+
+    <table border=" 5">
+        <tr>
+        <thead>
+        <td>Location</td>
+        <td>Topic</td>
+        </thead>
+
+        </tr>
+        <tr>
+            <td>New York</td>
+            <td>Javascript & Jquery</td>
+        </tr>
+        <tr>
+            <td>San Fransisco</td>
+            <td>HTML &Aacute; CSS</td>
+        </tr>
+    </table>
+    <h1>Signup</h1>
+    <form action="/" method="post">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" value="" />
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="" />
+        </div>
+
+        <div>
+            <label for="location">Location:</label>
+            <select name="location" id="locationid">
+                <option>SanFransisco</option>
+                <option>New York</option>
+            </select>
+        </div>
+        <fieldset style="width:200px">
+            <legend>Gender</legend>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="male">Male</label><br>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label><br>
+        </fieldset>
+        <div>
+            <label for="experience">Experience:</label></div>
+        <div>
+            <input type="text" style="width:200px; height:200px" name="experience" />
+        </div>
+        <button type="submit">Sign Up</button>
+        
+        <div>
+            <a href="">Twitter   |</a>
+            <a href="">Facebook  |</a>
+            <a href="">Flicker</a>
+        </div>
+
+
+    </form>
+</body>
+</html>

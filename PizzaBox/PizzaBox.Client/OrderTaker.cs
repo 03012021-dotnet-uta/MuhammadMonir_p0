@@ -15,7 +15,7 @@ namespace PizzaBox.Client
 
         private List<Crust> crusts;
         private int totalPremadePiza;
-        private int totalCustomizedPizza;
+        //private int totalCustomizedPizza;
         private int totalCrusts;
         private int totalToppings;
         private APizza selectedPizza;
@@ -49,7 +49,7 @@ namespace PizzaBox.Client
             crusts = mc.GetCrusts();
             toppings = mc.GetToppings();
             newOrderDetails = new List<OrderDetail>();
-            
+
 
         }
 
@@ -75,12 +75,12 @@ namespace PizzaBox.Client
                     Console.WriteLine("Having or made by  {0}", crust.Name);
                     Console.Write("Toppings including ");
                     float price = crust.BasePrice;
-                    
+
                     List<PremadePizzaTopping> pt = premadePizzaToppings.FindAll(x => x.PremadePizzaID == p.ID);
                     Topping topping1;
                     foreach (var p1 in pt)
                     {
-                       topping1 = toppings.FirstOrDefault(g => g.ID == p1.ToppingID);
+                        topping1 = toppings.FirstOrDefault(g => g.ID == p1.ToppingID);
                         Console.Write(topping1.Name + " ");
                         price += topping1.BasePrice;
                     }
@@ -175,9 +175,9 @@ namespace PizzaBox.Client
             newOrder.OrderDate = DateTime.Now.Date;
             newOrder.StoreAmount = total;
             newOrder.TaxAmount = (float)(total * 1.1);
-            
+
             int newOrderID = mc.SaveOrder(newOrder);
-            
+
             Console.WriteLine("Your order is saved with ID# {0}", newOrderID);
         }
 
@@ -193,7 +193,7 @@ namespace PizzaBox.Client
 
         }
 
-        private CustomizedPizza CreatPizza()
+        public CustomizedPizza CreatPizza()
         {
             CustomizedPizza customizedPizza = new();
             //display crust options
@@ -214,29 +214,43 @@ namespace PizzaBox.Client
             Console.WriteLine("Step 2/2 ------ Choose upto 3 toppings");
             foreach (var tp in toppings)
                 Console.WriteLine("{0} {1} \tEnter {0} to select this topping", tp.ID, tp.Name);
-            int toppingChoice;
-            int[] toppingArray = new int[3];
-            for (int i = 1; i <= 3; i++)
+
+
+            Console.WriteLine("Enter  2 to 5 Topping choice");
+            List<int> itoppingchoices = new List<int>();
+            int toppingcounter = 0;
+            string[] toppingchoices;
+            do
             {
-                Console.WriteLine("Enter Topping{0} choice", i);
-                do
+                toppingchoices = Console.ReadLine().Split(' ');
+
+                foreach (var st in toppingchoices)
                 {
-                    toppingChoice = Convert.ToInt32(Console.ReadLine());
-                    if (toppingChoice < 1 || toppingChoice > totalToppings)
-                        Console.WriteLine("Wrorng Choice.... Please enter number greater than 1 and less than {0}", totalToppings + 1);
+                    if ((toppings.Find(t => int.Parse(st).Equals(t.ID)).ID) != int.Parse(st))
+                    {
+                        Console.WriteLine("We do not have topping ID {0}, Please re-enter the correct one", itoppingchoices[toppingcounter]);
+                        itoppingchoices.Add(int.Parse(Console.ReadLine()));
+                        toppingcounter++;
+                    }
+                    else
+                    {
+                        itoppingchoices.Add(int.Parse(st));
+                        toppingcounter++;
+                    }
+                }
 
-                } while (toppingChoice < 1 || toppingChoice > totalToppings);
+            } while (toppingcounter < 2 && toppingcounter >= 5);
+            for (int i = 0; i < toppingcounter; i++)
+                customizedPizza.CustomizedPizzaToppings.Add(new CustomizedPizzaTopping() { ToppingID = itoppingchoices[i] });
 
-                customizedPizza.CustomizedPizzaToppings.Add(new CustomizedPizzaTopping { ToppingID = toppingChoice });
-                toppingArray[i - 1] = toppingChoice;
-            }
+
             float[] mf = new float[4];
             mf[0] = 1.0f;
             mf[1] = sizes[1].PriceMultiplicationFactor;
             mf[2] = sizes[2].PriceMultiplicationFactor;
             mf[3] = sizes[3].PriceMultiplicationFactor;
 
-            float price = CalculatePrice(customizedPizza.CrustID, toppingArray);
+            float price = CalculatePrice(customizedPizza.CrustID, itoppingchoices);
             Console.WriteLine("\nPrices:  \tSmall = ${0}\n\t\tMedium = ${1}" +
             "\n\t\tLarge = ${2}\n\t\tX_Large = ${3} \n", price, (price * mf[1]).ToString("n2"), (price * mf[2]).ToString("n2"),
             (price * mf[3]).ToString("n2"));
@@ -249,7 +263,7 @@ namespace PizzaBox.Client
             return customizedPizza;
         }
 
-        public float CalculatePrice(int crustID, int[] toppings1)
+        public float CalculatePrice(int crustID, List<int> toppings1)
         {
 
 
