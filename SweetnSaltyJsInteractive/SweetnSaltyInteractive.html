@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Sweet and Salty Inteactive</title>
+    <style>
+        /* Set a style for all buttons */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+        button:hover {
+            opacity: 1;
+        }
+
+        /* Add padding and center-align text to the container */
+        .container {
+            padding: 16px;
+            text-align: center;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: #474e5d;
+            padding-top: 50px;
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto;
+            /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* Style the horizontal ruler */
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        /* The Modal Close Button (x) */
+        .close {
+            position: absolute;
+            right: 35px;
+            top: 15px;
+            font-size: 40px;
+            font-weight: bold;
+            color: #f1f1f1;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #f44336;
+            cursor: pointer;
+        }
+
+        /* Clear floats */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .inputfeild {
+            float: left;
+        }
+
+        span {
+            float: left;
+            width: 6em;
+            color: #FF0000;
+            background-color: aqua;
+        }
+
+        .special {
+            width: 100%;
+            font-size: larger;
+        }
+
+        .special2 {
+            width: 100%;
+            text-align: center;
+        }
+
+        .heading {
+            text-align: center;
+            background-color: magenta;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="heading">
+        <h1>Sweet and Salty Interactive</h1>
+    </div>
+
+
+    <div id="id01" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <h1>Enter You Inputs</h1>
+                <div class="inputfeild">
+                    <label for="startnumber">Starting Number:</label>
+                    <input id="startn" type="text" placeholder="Start Number" name="startnumber">
+                </div>
+                <div class="inputfeild">
+                    <label for="endnumber">Ending Number:</label>
+                    <input id="endn" type="text" placeholder="End Number" name="endnumber">
+                </div>
+                <div class="inputfeild">
+                    <label for="perline">P/Line Number:</label>
+                    <input id="perline" type="text" placeholder="How many per line" name="perline">
+
+                </div>
+
+                <div class="clearfix">
+                    <input type="submit" id="btn1" onclick="displayResult()" value="Submit">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="div1" class="special2">Main Container</div>
+
+
+    <script>
+
+        var countSweet = 0;
+        var countSalty = 0;
+        var countSweetNSalty = 0;
+
+        const div1 = document.getElementById('div1');
+
+        var modal = document.getElementById('id01');
+
+
+        function myMainfunction() {
+            let start = document.getElementById('startn').value;
+            //let start = 1;
+            let end = document.getElementById('endn').value;
+            let perline = document.getElementById('perline').value;
+          
+            let i = 0;
+            //let end = 1000;
+            // print 'Sweet' in place of the number
+            let lineString = "";
+            for (i = start; i <= end; i++) {
+                // number divisible by 3 and 5 will
+                // print 'Sweet' in place of the number
+                lineString += `<span>${MySweetNSalty(i)}</span>`;
+                if (i % perline == 0)
+                    lineString += `<br>`;
+                //console.log(lineString);
+            }
+            // console.log(lineString);
+            lineString += `<p>******* Total Counts *********"</p>
+            <p>Sweet = ${countSweet}</p>
+            <p>Salty = ${countSalty}</p>
+            <p>SweetNSalty = ${countSweetNSalty}</p>`
+            div1.innerHTML = `<div class="special2">${lineString}</div`;
+            div1.innerHTML += `<button onclick="inputNumbers()">Input Number - Again</button>`
+            div1.innerHTML += `<button onclick="introAgain()">Intro - Again</button>`
+
+            lineString = "";
+        }
+
+        function MySweetNSalty(i) {
+            if ((i % 5 == 0) && (i % 3 == 0)) {
+
+                countSweetNSalty++;
+                return "SweetNSalty";
+            }
+            if (i % 3 == 0) {
+                //  Console.Write("Sweet\t");
+                countSweet++;
+                return "Sweet";
+            }
+
+            // number divisible by 5 print 'Salty'
+            // in place of the number
+            if ((i % 5) == 0) {
+                //Console.Write("Salty\t");
+                countSalty++;
+                return "Salty";
+            }
+
+            // number divisible by 3 and 5, print 'SweetNSalty'  
+            // in place of the number
+
+
+            else // print the number            
+                return i.toString();
+            // after printing 10 numbers goto next line
+
+
+        }
+
+
+        function displayResult() {
+
+            document.getElementById('id01').style.display = 'none';
+            myMainfunction();
+        }
+
+        function startUpScreen() {
+            div1.innerHTML = `<span class="special">Hello welcome to my Intro screen. The purpose is to count from a starting 
+            number to another number and to display these number on the screen. But to make it little interested not all numbers
+            need to be printed. If the number is divisble by 3 the word 'Sweet' should appear and for 
+            numbers divisble by 5 the word 'Salty should appear. And Guess what if the number is divisible by both 3 and 5....
+            See the result youself.. You have an option to display a certain numbers in a line. If you want to Select your own numbers click
+            on this button.'
+            
+            <button onclick="inputNumbers()">Enter Input</button>
+            </span>`
+        }
+
+        function inputNumbers() {
+            resetAllNumbers();
+            document.getElementById('id01').style.display = 'block';
+            myMainfunction();
+        }
+
+        function introAgain() {
+            resetAllNumbers();
+            document.getElementById('id01').style.display = 'none';
+            startUpScreen();
+        }
+
+        function resetAllNumbers() {
+            start = 0;
+            end = 0;
+            countSweet =0;
+            countSalty = 0;
+            countSweetNSalty = 0;
+        }
+
+        startUpScreen();
+    </script>
+</body>
+
+</html>
